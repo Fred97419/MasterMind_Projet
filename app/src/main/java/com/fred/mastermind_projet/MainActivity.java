@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void jouer (View v){
 
-        Intent jouerActivity = new Intent(this ,MasterMindActivity.class);
+        Intent jouerActivity = new Intent(this ,MastermindActivity.class);
 
 
         startActivity(jouerActivity);

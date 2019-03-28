@@ -16,10 +16,6 @@
         tools:layout_editor_absoluteY="94dp">
 
 
-        <com.fred.mastermind_projet.Mastermind
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
