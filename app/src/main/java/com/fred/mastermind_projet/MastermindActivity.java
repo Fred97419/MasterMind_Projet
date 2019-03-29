@@ -18,7 +18,7 @@ public class MastermindActivity extends AppCompatActivity {
     private TableLayout grillePion;
     private TableLayout scorePion;
 
-    private int[] couleurPionGrille = {};
+    private int[] couleurPionGrille = {Color.YELLOW, Color.CYAN , Color.MAGENTA , Color.GREEN , Color.RED};
     private int[] couleurPionScore = {};
 
 
