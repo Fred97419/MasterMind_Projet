@@ -2,27 +2,28 @@ package com.fred.mastermind_projet;
 
 import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-public class MastermindActivity extends AppCompatActivity {
+public class MastermindActivity extends AppCompatActivity  {
 
+    private int manche = 0 ;
 
     private Button[][] tabPion ;
     private Button[][] tabScore;
+    private Button[] tabJouer; //nos 4 pions pour lesquels on va choisir la couleur
     private TableLayout grillePion;
     private TableLayout scorePion;
 
-    private int[] couleurPionGrille = {Color.YELLOW, Color.CYAN , Color.MAGENTA , Color.GREEN , Color.RED};
-    private int[] couleurPionScore = {};
-
-
-
+    private int[] couleurPionGrille = {Color.YELLOW, Color.CYAN , Color.MAGENTA , Color.GREEN , Color.RED, Color.BLACK, Color.BLUE };
+    private int[] couleurPionScore = {Color.BLACK , Color.RED , Color.WHITE};
 
 
     @Override
@@ -33,12 +34,12 @@ public class MastermindActivity extends AppCompatActivity {
         scorePion = findViewById(R.id.scorePion);
         tabPion = new Button[11][4];
         tabScore = new Button[11][4];
+        tabJouer = new Button[4];
+
 
         setGrilleMastermind();
         setScoreMastermind();
-
-
-
+        setPionJouer();
     }
 
     private void setGrilleMastermind(){
@@ -65,6 +66,21 @@ public class MastermindActivity extends AppCompatActivity {
             grillePion.addView(row,lp);
         }
     }
+
+    private void setPionJouer (){
+
+        tabJouer[0] = findViewById(R.id.pion0);
+        tabJouer[1] = findViewById(R.id.pion1);
+        tabJouer[2] = findViewById(R.id.pion2);
+        tabJouer[3] = findViewById(R.id.pion3);
+
+        for(int i =0 ; i<4 ; i++) {
+
+            setColorPion(tabJouer[i] , Color.YELLOW);
+        }
+
+    }
+
 
     private void setScoreMastermind(){
 
@@ -96,6 +112,53 @@ public class MastermindActivity extends AppCompatActivity {
         GradientDrawable pion = (GradientDrawable) getResources().getDrawable(R.drawable.pion).mutate();
         pion.setColor(backgroundColor);
         b.setBackgroundDrawable(pion);
+        b.setTextColor(backgroundColor);
 
     }
+
+    public void changeColor(View v){
+
+
+        Button b = (Button) v;
+         int compteur = Integer.parseInt(b.getText().toString());
+
+
+        setColorPion(b,couleurPionGrille[compteur%7]);
+
+        compteur++;
+
+        b.setText(Integer.toString(compteur));
+
+    }
+
+    public void jouerManche(View v){
+
+
+        for (int i = 0 ; i<4 ; i++){
+
+            setColorPion(tabPion[10-manche][i] , tabJouer[i].getPaint().getColor());
+
+
+        }
+
+        manche ++;
+
+        if (manche == 11){
+
+            System.exit(0);
+
+        }
+
+    }
+
+
+    public boolean isWin (){
+
+
+
+        return true;
+    }
+
+
+
 }
