@@ -1,21 +1,25 @@
 package com.fred.mastermind_projet;
 
-import android.annotation.TargetApi;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+
 import java.util.Random;
 
 public class MastermindActivity extends AppCompatActivity  {
 
+
+
     private int manche = 0 ;
+    private int secondes =0;
+
+    private Chronometer scoreChrono;
 
     private Button[][] tabPion ;
     private Button[][] tabScore;
@@ -26,24 +30,33 @@ public class MastermindActivity extends AppCompatActivity  {
     private int[] combinaison ;
     private long[] couleurPionGrille = {Color.YELLOW, Color.CYAN , Color.MAGENTA , Color.GREEN , Color.RED, Color.BLACK, Color.BLUE, Color.WHITE};
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mastermind);
+
+
+
         grillePion = findViewById(R.id.grillePionMaster);
+        scoreChrono = findViewById(R.id.chrono);
         scorePion = findViewById(R.id.scorePion);
         tabPion = new Button[11][4];
         tabScore = new Button[11][4];
         tabJouer = new Button[4];
         combinaison = new int[4];
 
+
+
         setGrilleMastermind();
         setScoreMastermind();
         setPionJouer();
         setCombinaison();
+        scoreChrono.start();
+
+
     }
+
+
 
     private void setGrilleMastermind(){
 
@@ -161,6 +174,8 @@ public class MastermindActivity extends AppCompatActivity  {
     public void jouerManche(View v){
 
 
+
+
         for (int i = 0 ; i<4 ; i++){
 
             setColorPion(tabPion[10-manche][i] , getColorPion(tabJouer[i]));
@@ -179,6 +194,8 @@ public class MastermindActivity extends AppCompatActivity  {
 
         }
 
+        if (isWin()) System.exit(0);
+
     }
 
     private boolean isInCombinaison(Button b){
@@ -192,8 +209,6 @@ public class MastermindActivity extends AppCompatActivity  {
 
         }
 
-
-
         return false;
 
 
@@ -203,16 +218,29 @@ public class MastermindActivity extends AppCompatActivity  {
 
         for (int i =0 ; i< 4 ; i++){
 
-            for (int j=0 ; j<4 ; j++){
 
-                if (isInCombinaison(tabJouer[i]) && i == j ) setColorPion(tabScore[10-manche][i],Color.BLACK);
 
-                if (isInCombinaison(tabJouer[i]) && i!=j ) setColorPion(tabScore[10-manche][i],Color.RED);
+            for (int j=0 ; j<4 ; j++) {
 
-               else {setColorPion(tabScore[10-manche][i],Color.WHITE);}
+                if (isInCombinaison(tabJouer[i])) {
+
+
+                    if ((getColorPion(tabJouer[i]) == combinaison[j])  && i==j  ) {
+
+                        setColorPion(tabScore[10 - manche][i], Color.BLACK);
+                        break;
+
+                    }
+
+                    if ( !(isInCombinaison(tabJouer[i]))) setColorPion(tabScore[10-manche][i] , Color.WHITE);
+
+
+
+
+
+                }
 
             }
-
         }
 
 
@@ -266,6 +294,20 @@ public class MastermindActivity extends AppCompatActivity  {
 
     public boolean isWin (){
 
+        for (int i=0 ; i< 4 ; i++){
+
+            if (getColorPion(tabJouer[i]) !=  combinaison[i] ) {
+
+
+
+                return false;
+            }
+
+
+
+        }
+
+        scoreChrono.stop();
 
 
         return true;

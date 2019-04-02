@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MasterMind_Projet</string>
     <string name="title_activity_master_mind">MasterMindActivity</string>
+    <string name="title_activity_score">ScoreActivity</string>
 </resources>
