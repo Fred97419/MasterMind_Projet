@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import java.util.Random;
 
 public class MastermindActivity extends AppCompatActivity  {
 
@@ -22,8 +23,9 @@ public class MastermindActivity extends AppCompatActivity  {
     private TableLayout grillePion;
     private TableLayout scorePion;
 
-    private int[] couleurPionGrille = {Color.YELLOW, Color.CYAN , Color.MAGENTA , Color.GREEN , Color.RED, Color.BLACK, Color.BLUE };
-    private int[] couleurPionScore = {Color.BLACK , Color.RED , Color.WHITE};
+    private int[] combinaison ;
+    private long[] couleurPionGrille = {Color.YELLOW, Color.CYAN , Color.MAGENTA , Color.GREEN , Color.RED, Color.BLACK, Color.BLUE, Color.WHITE};
+
 
 
     @Override
@@ -35,11 +37,12 @@ public class MastermindActivity extends AppCompatActivity  {
         tabPion = new Button[11][4];
         tabScore = new Button[11][4];
         tabJouer = new Button[4];
-
+        combinaison = new int[4];
 
         setGrilleMastermind();
         setScoreMastermind();
         setPionJouer();
+        setCombinaison();
     }
 
     private void setGrilleMastermind(){
@@ -65,6 +68,24 @@ public class MastermindActivity extends AppCompatActivity  {
 
             grillePion.addView(row,lp);
         }
+    }
+
+    private void setCombinaison(){
+
+        Random r = new Random();
+
+        System.out.println("COMBINAISON :");
+        for (int i =0 ; i<4 ; i++){
+
+            combinaison[i] = (int)couleurPionGrille[r.nextInt(8)];
+
+            System.out.print(" : [ "+showCombinaison(combinaison[i])+"] , ");
+            System.out.println("");
+
+
+        }
+
+
     }
 
     private void setPionJouer (){
@@ -116,6 +137,11 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
+    private int getColorPion(Button b){
+
+        return b.getPaint().getColor();
+    }
+
     public void changeColor(View v){
 
 
@@ -123,7 +149,8 @@ public class MastermindActivity extends AppCompatActivity  {
          int compteur = Integer.parseInt(b.getText().toString());
 
 
-        setColorPion(b,couleurPionGrille[compteur%7]);
+        setColorPion(b,(int)couleurPionGrille[compteur%8]);
+
 
         compteur++;
 
@@ -136,18 +163,103 @@ public class MastermindActivity extends AppCompatActivity  {
 
         for (int i = 0 ; i<4 ; i++){
 
-            setColorPion(tabPion[10-manche][i] , tabJouer[i].getPaint().getColor());
-
-
+            setColorPion(tabPion[10-manche][i] , getColorPion(tabJouer[i]));
+            System.out.println(" Couleur tableau JOUER : " +i+" : "+ showCombinaison(getColorPion(tabJouer[i])));
         }
 
-        manche ++;
+
+
+        arbitrageManche();
+
+        manche++;
 
         if (manche == 11){
 
             System.exit(0);
 
         }
+
+    }
+
+    private boolean isInCombinaison(Button b){
+
+        for (int i=0 ; i<4 ; i++){
+
+            if ( getColorPion(b) == combinaison[i]) {
+
+                return true;
+            }
+
+        }
+
+
+
+        return false;
+
+
+    }
+
+    private void arbitrageManche(){
+
+        for (int i =0 ; i< 4 ; i++){
+
+            for (int j=0 ; j<4 ; j++){
+
+                if (isInCombinaison(tabJouer[i]) && i == j ) setColorPion(tabScore[10-manche][i],Color.BLACK);
+
+                if (isInCombinaison(tabJouer[i]) && i!=j ) setColorPion(tabScore[10-manche][i],Color.RED);
+
+               else {setColorPion(tabScore[10-manche][i],Color.WHITE);}
+
+            }
+
+        }
+
+
+
+
+
+    }
+
+    private String showCombinaison(int color){
+        String scolor="";
+        switch (color){
+            case -256:
+                scolor = "Jaune";
+                break;
+
+            case -16711681:
+                scolor="Cyan";
+                break;
+
+            case -65281:
+                scolor="Magenta";
+                break;
+
+
+            case -65536:
+                scolor="Rouge";
+                break;
+
+            case -16711936:
+                scolor="Vert";
+                break;
+
+            case -16777216:
+                scolor="Noir";
+                break;
+
+            case -16776961:
+                scolor="Bleu";
+                break;
+
+            case -1 :
+                scolor="Blanc";
+                break;
+        }
+
+
+        return scolor;
 
     }
 
