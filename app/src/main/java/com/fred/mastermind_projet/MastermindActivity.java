@@ -1,5 +1,6 @@
 package com.fred.mastermind_projet;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -194,7 +195,14 @@ public class MastermindActivity extends AppCompatActivity  {
 
         }
 
-        if (isWin()) System.exit(0);
+        if (isWin()){
+
+            Intent scoreActivity = new Intent(this ,ScoreActivity.class);
+            scoreActivity.putExtra("scoreChrono" , scoreChrono.getText());
+            System.out.println(scoreChrono.getText());
+            startActivity(scoreActivity);
+
+        }
 
     }
 
