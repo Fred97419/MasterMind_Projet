@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/scoreChronoText" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/nomScore"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="43dp"
@@ -65,14 +65,15 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="160dp"
         android:layout_marginRight="160dp"
+        android:layout_marginBottom="44dp"
+        android:onClick="validerScore"
         android:text="Valider"
         android:textColorLink="@android:color/holo_blue_bright"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
