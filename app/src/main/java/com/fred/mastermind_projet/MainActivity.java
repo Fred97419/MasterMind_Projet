@@ -5,6 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * MainActivity est l'activité principale de l'application c'est elle qui va amener vers les autres activités
+ *
+ * @see MastermindActivity
+ * @see ListScoreActivity
+ *
+ *
+ * @author Frédérick Fabre Ferber
+ *
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

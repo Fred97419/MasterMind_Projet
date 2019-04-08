@@ -1,13 +1,19 @@
 package com.fred.mastermind_projet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ListScoreActivity extends AppCompatActivity {
 
@@ -15,13 +21,21 @@ public class ListScoreActivity extends AppCompatActivity {
     private String nomScore;
     private ListView listViewScore;
     private List<Score> scores;
-    ScoreArrayAdapter adapter;
+    private ScoreArrayAdapter adapter;
+
+    private DatabaseHelper scoreDB ;
 
 
-    @Override
+
+
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_score);
+
+        scoreDB = new DatabaseHelper(this);
+
 
         chronoText = "";
         nomScore = "";
@@ -37,15 +51,62 @@ public class ListScoreActivity extends AppCompatActivity {
         }
 
         listViewScore = findViewById(R.id.listScore);
+
+
+
+        Cursor data = scoreDB.getListContents();
+        addData(chronoText,nomScore);
+
         scores = new ArrayList<Score>();
-        scores.add(new Score(chronoText , nomScore));
 
-        adapter = new ScoreArrayAdapter(ListScoreActivity.this , scores);
 
-        listViewScore.setAdapter(adapter);
+        if (data.getCount() != 0){
 
 
 
+            while(data.moveToNext()){
+
+
+
+                scores.add(new Score(data.getString(1) , data.getString(2)));
+
+                adapter = new ScoreArrayAdapter(ListScoreActivity.this , scores);
+
+                listViewScore.setAdapter(adapter);
+
+
+            }
+
+        }
+
+
+
+
+
+
+    }
+
+
+    public void addData(String nom , String score){
+
+        boolean insertData = scoreDB.addData(nom ,score);
+
+        if (insertData){
+
+            System.out.println("SUCCES : AJOUTER");
+        }
+
+        else{
+
+            System.out.println("ECHEC : AJOUTER");
+        }
+
+    }
+
+    public void quitter(View v){
+
+        Intent home = new Intent(this,MainActivity.class);
+        startActivity(home);
 
     }
 

@@ -13,25 +13,47 @@ import android.widget.TableRow;
 
 import java.util.Random;
 
+/**
+ *  MastermindActivity est l'activité "pillier" de l'application c'est dans celle-ci que se déroule le jeu, avec toutes ses fonctionalités.
+ *  Comme l'intéraction avec l'utilisateur, la création de la grille du jeu, le système de score etc ...
+ *
+ * @author Frédérick Fabre Ferber
+ *
+ *
+ *
+ */
+
 public class MastermindActivity extends AppCompatActivity  {
 
 
 
     private int manche = 0 ;
-    private int secondes =0;
 
-    private Chronometer scoreChrono;
 
-    private Button[][] tabPion ;
-    private Button[][] tabScore;
-    private Button[] tabJouer; //nos 4 pions pour lesquels on va choisir la couleur
-    private TableLayout grillePion;
-    private TableLayout scorePion;
+    private Chronometer scoreChrono; //widget d'android chronometre qui est notre score
 
-    private int[] combinaison ;
-    private long[] couleurPionGrille = {Color.YELLOW, Color.CYAN , Color.MAGENTA , Color.GREEN , Color.RED, Color.BLACK, Color.BLUE, Color.WHITE};
+    private Button[][] tabPion ;    // un tableau qui représente notre grille du score.
+    private Button[][] tabScore;    // un tableau qui représente notre grille du jeu.
+    private Button[] tabJouer;      //nos 4 pions pour lesquels on va choisir la couleur
+    private TableLayout grillePion; //TableLayout où est affiché notre tableau tabScore
+    private TableLayout scorePion;  //TabLayout où est affiché notre tableau tabScore
+
+    private int[] combinaison ; //tableau où va être stockée la combinaison aléatoire à trouver.
+
+    private long[] couleurPionGrille = {Color.YELLOW, Color.CYAN , Color.MAGENTA , Color.GREEN , Color.RED, Color.BLACK, Color.BLUE, Color.WHITE}; //tableau contenant toutes les couleurs du jeu.
 
     @Override
+
+    /**
+     *
+     * Met en place toutes les composantes du jeu au lancement de l'activité
+     *
+     *
+     *
+     *
+     *
+     *
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mastermind);
@@ -43,7 +65,7 @@ public class MastermindActivity extends AppCompatActivity  {
         scorePion = findViewById(R.id.scorePion);
         tabPion = new Button[11][4];
         tabScore = new Button[11][4];
-        tabJouer = new Button[4];
+        tabJouer = new Button[4]; //tableau de 4 boutons un pour chaque pion que le joueur va selectionner
         combinaison = new int[4];
 
 
@@ -58,18 +80,32 @@ public class MastermindActivity extends AppCompatActivity  {
     }
 
 
-
+    /**
+     *
+     * Créé la grille de pion en remplissant le tableau,
+     * et l'ajoute dans la <b>TableRow</b>.
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
     private void setGrilleMastermind(){
 
-        grillePion.removeAllViews();
+        grillePion.removeAllViews(); //refresh le layout
+
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT , TableRow.LayoutParams.WRAP_CONTENT);
         lp.setMargins(15,5,15,5);
 
         for (int i = 0 ; i<11 ; i++){
-            TableRow row = new TableRow(this);
+            TableRow row = new TableRow(this); //créé une nouvelle ligne
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT , TableRow.LayoutParams.WRAP_CONTENT));
 
             for(int j = 0 ; j< 4 ; j++){
+
+                //rajoute 4 boutons dans la "row"
 
                 tabPion[i][j] = new Button(this);
                 setColorPion(tabPion[i][j] , Color.DKGRAY);
@@ -80,10 +116,17 @@ public class MastermindActivity extends AppCompatActivity  {
 
             }
 
-            grillePion.addView(row,lp);
+            grillePion.addView(row,lp); //rajoute la row au layout
         }
     }
 
+    /**
+     *
+     * Remplit le tableau combinaison avec 4 couleurs générées aléatoirement parmis les couleurs du tableau <b>couleurPionGrille</b>
+     *
+     *
+     *
+     */
     private void setCombinaison(){
 
         Random r = new Random();
@@ -102,6 +145,17 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
+
+    /**
+     *
+     *  récupère les 4 pions du joueur et définit la couleur sur jaune
+     *
+     *
+     *
+     *
+     *
+     *
+     */
     private void setPionJouer (){
 
         tabJouer[0] = findViewById(R.id.pion0);
@@ -116,7 +170,11 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
-
+    /**
+     * Créé la grille de pion d'arbitrage (10 x 4) en remplissant le tableau,
+     *      * et l'ajoute dans la <b>TableRow</b>.
+     *
+     */
     private void setScoreMastermind(){
 
         scorePion.removeAllViews();
@@ -142,6 +200,20 @@ public class MastermindActivity extends AppCompatActivity  {
         }
     }
 
+
+    /**
+     * Va modifier la couleur du bouton et lui donnner la forme du <b>Drawable</b> de pion.xml
+     *
+     *
+     * @param b le boutton sur lequel on va changer la couleur
+     * @param backgroundColor la couleur
+     *
+     *
+     * @see GradientDrawable
+     *
+     *
+     *
+     */
     private void setColorPion(Button b , int backgroundColor){
 
         GradientDrawable pion = (GradientDrawable) getResources().getDrawable(R.drawable.pion).mutate();
@@ -151,11 +223,26 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
+
+    /**
+     *
+     *Récupère la couleur du bouton
+     *
+     *
+     * @param b le bouton sur lequel on souhaite récupérer la couleur
+     * @return la couleur
+     */
     private int getColorPion(Button b){
 
         return b.getPaint().getColor();
     }
 
+
+    /**
+     * Change la couleur du bouton chaque fois que l'on clique dessus
+     *
+     * @param v Vue
+     */
     public void changeColor(View v){
 
 
@@ -172,11 +259,26 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
+    /**
+     * Bouton "valider" qui va prendre les 4 couleurs données par le joueur et les placer sur les
+     * lignes correspondantes en fonction de la manche. Puis va arbitrer la manche.
+     *
+     * Si la combinaison a été trouvée on gagne et on passe à l'activité suivante.
+     * @see ScoreActivity
+     *
+     * Si on arrive à la manche 11 on perd
+     *
+     * @param v Vue
+     */
     public void jouerManche(View v){
 
 
 
+        /*
 
+        Parcours TEST
+
+         */
         for (int i = 0 ; i<4 ; i++){
 
             setColorPion(tabPion[10-manche][i] , getColorPion(tabJouer[i]));
@@ -206,6 +308,13 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
+    /**
+     *
+     * Determine si la couleur du bouton est dans la combinaison
+     *
+     * @param b Bouton
+     * @return vrai si la couleur est dans la combinaison sinon faux
+     */
     private boolean isInCombinaison(Button b){
 
         for (int i=0 ; i<4 ; i++){
@@ -222,6 +331,30 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
+    private int countIsInCombinaison(Button b) {
+
+        int c = 0;
+
+        for (int i = 0; i < 4; i++) {
+
+            if (getColorPion(b) == combinaison[i]) {
+
+                c++;
+            }
+
+        }
+
+        return c;
+
+    }
+
+
+    /**
+     *
+     * Va arbitrer la manche chaque fois que le joueur aura valider ses pions.
+     *
+     *
+     */
     private void arbitrageManche(){
 
         for (int i =0 ; i< 4 ; i++){
@@ -233,18 +366,30 @@ public class MastermindActivity extends AppCompatActivity  {
                 if (isInCombinaison(tabJouer[i])) {
 
 
-                    if ((getColorPion(tabJouer[i]) == combinaison[j])  && i==j  ) {
+                    if ((getColorPion(tabJouer[i]) == combinaison[j]) && i==j ) { //si le pion est dans la combinaison et bien placé
 
                         setColorPion(tabScore[10 - manche][i], Color.BLACK);
                         break;
 
+
                     }
 
-                    if ( !(isInCombinaison(tabJouer[i]))) setColorPion(tabScore[10-manche][i] , Color.WHITE);
+                    if ((getColorPion(tabJouer[i]) != combinaison[j]) ) { //si le pion est dans la combinaison mais mal placé
 
 
+                        if (j==3 ) {
+                            setColorPion(tabScore[10 - manche][i], Color.RED);
+                            break;
 
+                        }
 
+                    }
+
+                }
+
+                if (!(isInCombinaison(tabJouer[i]))){ //si le pion n'est pas dans la combinaison
+
+                    setColorPion(tabScore[10-manche][i] , Color.WHITE);
 
                 }
 
@@ -257,6 +402,13 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
+    /**
+     * Determine la couleur à partir du numéro de la couleur.
+     * Sert surtout pour la phase de test.
+     *
+     * @param color numéro de la couleur
+     * @return la chaine de caractères correspondant à la couleur
+     */
     private String showCombinaison(int color){
         String scolor="";
         switch (color){
