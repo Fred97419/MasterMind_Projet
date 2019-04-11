@@ -6,6 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * DatabaseHelper est une classe héritant de SQLiteOpenHelper c'est elle qui va créer notre base de donnée,
+ * et met a dispostion les methodes pour rajouter dans notre base, récupérer les données etc ...
+ *
+ * @see SQLiteOpenHelper
+ *
+ *
+ *
+ *
+ *
+ */
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "score.db";

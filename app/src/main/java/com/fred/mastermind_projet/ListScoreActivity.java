@@ -15,15 +15,31 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+/**
+ * ListScoreActivity gère notre liste de score. En récupérant le nom et le score de ScoreActivity elle va les ajouter à
+ * une base de donnée, mettre à jour celle ci et ajouter son contenu dans une List de Score.
+ *
+ * La ListView pourra ensuite utiliser cette List via un ArrayAdapter pour afficher notre liste de scores
+ *
+ *
+ * @see ListScoreActivity
+ * @see DatabaseHelper
+ * @see ScoreArrayAdapter
+ * @see Score
+ *
+ *
+ *
+ */
 public class ListScoreActivity extends AppCompatActivity {
 
-    private String chronoText;
-    private String nomScore;
-    private ListView listViewScore;
-    private List<Score> scores;
+    private String chronoText; //score
+    private String nomScore; //nom
+    private ListView listViewScore; //
+    private List<Score> scores; //Liste de score
     private ScoreArrayAdapter adapter;
 
-    private DatabaseHelper scoreDB ;
+    private DatabaseHelper scoreDB ; //notre base de donnée
 
 
 
@@ -63,7 +79,7 @@ public class ListScoreActivity extends AppCompatActivity {
         if (data.getCount() != 0){
 
 
-
+            /*Parcours toute la base de donnée pour rajouter chaque élément dans notre liste utilisable par l'ArrayAdapter*/
             while(data.moveToNext()){
 
 
@@ -86,7 +102,14 @@ public class ListScoreActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     *
+     * Va ajouter notre nom et score à notre base de données
+     *
+     *
+     * @param nom nom du joueur
+     * @param score score du joueur
+     */
     public void addData(String nom , String score){
 
         boolean insertData = scoreDB.addData(nom ,score);

@@ -40,6 +40,7 @@
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
         android:text="Règles"
+        android:onClick="regle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
@@ -51,6 +52,7 @@
         android:layout_marginEnd="162dp"
         android:layout_marginRight="162dp"
         android:text="Scores"
+        android:onClick="score"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 

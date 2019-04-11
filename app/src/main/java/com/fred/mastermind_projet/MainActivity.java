@@ -33,6 +33,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(jouerActivity);
 
     }
+
+    public void regle (View v){
+
+        Intent regleActivity = new Intent(this ,RegleActivity.class);
+
+
+        startActivity(regleActivity);
+
+
+    }
+
+    public void score (View v){
+
+        Intent scoreActivity = new Intent (this, ListScoreActivity.class);
+
+        startActivity(scoreActivity);
+
+    }
 }
 
 

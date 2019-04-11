@@ -276,7 +276,7 @@ public class MastermindActivity extends AppCompatActivity  {
 
         /*
 
-        Parcours TEST
+        Parcours TEST (montre la combinaison du code uniquement sur la console)
 
          */
         for (int i = 0 ; i<4 ; i++){
@@ -287,7 +287,7 @@ public class MastermindActivity extends AppCompatActivity  {
 
 
 
-        arbitrageManche();
+        arbitrageManche(); //va arbitrer la manche (donner une couleur aux pions d'arbitrage)
 
         manche++;
 
@@ -297,7 +297,7 @@ public class MastermindActivity extends AppCompatActivity  {
 
         }
 
-        if (isWin()){
+        if (isWin()){ //si c'est gagné on passe à l'activité ScoreActivity
 
             Intent scoreActivity = new Intent(this ,ScoreActivity.class);
             scoreActivity.putExtra("scoreChrono" , scoreChrono.getText());
@@ -331,22 +331,6 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
-    private int countIsInCombinaison(Button b) {
-
-        int c = 0;
-
-        for (int i = 0; i < 4; i++) {
-
-            if (getColorPion(b) == combinaison[i]) {
-
-                c++;
-            }
-
-        }
-
-        return c;
-
-    }
 
 
     /**
@@ -451,7 +435,16 @@ public class MastermindActivity extends AppCompatActivity  {
 
     }
 
-
+    /**
+     *
+     *  Determine si la manche est gagnante ou pas
+     *
+     *
+     *
+     *
+     *
+     * @return vrai si c'est gagné sinon faux
+     */
     public boolean isWin (){
 
         for (int i=0 ; i< 4 ; i++){

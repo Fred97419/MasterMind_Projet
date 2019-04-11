@@ -38,7 +38,7 @@ public class ScoreArrayAdapter extends ArrayAdapter<Score> {
             convertView.setTag(viewHolder);
         }
 
-        //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
+        
         Score score = getItem(position);
 
         //il ne reste plus qu'à remplir notre vue

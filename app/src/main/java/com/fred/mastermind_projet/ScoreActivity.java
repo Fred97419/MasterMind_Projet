@@ -10,6 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ *  ScoreActivity récupère le score envoyé par MastermindActibity  gère la saisie du nom du joueur et l'envoie du temps que l'on a mit pour gagner
+ *  à l'activité ListScoreActivity
+ *
+ * @see ListScoreActivity
+ * @see MastermindActivity
+ *
+ * @author Frédérick Fabre Ferber
+ *
+ *
+ *
+ */
+
 public class ScoreActivity extends AppCompatActivity {
 
     TextView scoreChrono;
@@ -33,6 +46,8 @@ public class ScoreActivity extends AppCompatActivity {
 
         chronoText = "";
         Intent intent = getIntent();
+
+        /*Récupère la score (temps) de l'activité MastermindAcitivity*/
         if (intent != null) {
 
             if (intent.hasExtra("scoreChrono")) {
@@ -46,6 +61,18 @@ public class ScoreActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     *  Bouton qui valide notre score et la chaine caractère chronoText et le
+     *  nom que l'on a écrit dans notre EditText pour la passer via un Intent
+     *  à notre activité ListScoreActivity
+     *
+     *
+     *
+     *
+     *
+     * @param v
+     */
     public void validerScore(View v){
 
 
