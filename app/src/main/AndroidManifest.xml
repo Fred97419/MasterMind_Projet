@@ -12,7 +12,7 @@
         <activity android:name=".RegleActivity"></activity>
         <activity android:name=".ListScoreActivity" />
         <activity android:name=".ScoreActivity" />
-        <activity android:name=".MastermindActivity" />
+        <activity android:name=".MastermindActivity" android:screenOrientation="portrait" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

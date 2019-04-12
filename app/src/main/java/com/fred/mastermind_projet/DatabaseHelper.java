@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  *
  * @see SQLiteOpenHelper
  *
- *
+ * @author Frédérick Fabre Ferber
  *
  *
  *
